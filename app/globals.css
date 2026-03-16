@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Brand Colors — Guardian Trust */
+  --color-navy-950: #0a1628;
+  --color-navy-900: #0d1f3c;
+  --color-navy-800: #112d54;
+  --color-navy-700: #163a6e;
+  --color-navy-600: #1a4688;
+  --color-navy-500: #1e52a2;
+  --color-navy-400: #3a6fbe;
+  --color-navy-300: #6a9fd4;
+  --color-navy-200: #a8c8e8;
+  --color-navy-100: #daeaf7;
+  --color-navy-50: #f0f7ff;
+
+  --color-trust-900: #0d3320;
+  --color-trust-800: #114428;
+  --color-trust-700: #155533;
+  --color-trust-600: #1a6a3e;
+  --color-trust-500: #1f7f4a;
+  --color-trust-400: #2a9a5c;
+  --color-trust-300: #4db87a;
+  --color-trust-200: #85d4a8;
+  --color-trust-100: #c0ecd4;
+  --color-trust-50: #edfaf3;
+
+  --color-gold-500: #c8942a;
+  --color-gold-400: #dba83c;
+  --color-gold-300: #ecc265;
+  --color-gold-100: #fdf3d9;
+
+  --color-neutral-950: #0c0c0e;
+  --color-neutral-900: #18181b;
+  --color-neutral-800: #27272a;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-600: #52525b;
+  --color-neutral-500: #71717a;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-50: #fafafa;
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Base */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #ffffff;
+  color: #18181b;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid #1a4688;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: #0d1f3c;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 6px 6px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: top 0.15s;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* Container */
+.container-site {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .container-site { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .container-site { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Hero gradient */
+.hero-gradient {
+  background: linear-gradient(135deg, #0a1628 0%, #112d54 45%, #0d3320 100%);
+}
+
+/* Card hover */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px 0 rgb(0 0 0 / 0.12), 0 4px 8px 0 rgb(0 0 0 / 0.08);
+}
