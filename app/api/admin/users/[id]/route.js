@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import { withAdmin, getClientIp } from '@/lib/apiMiddleware';
 import { logAudit } from '@/lib/logger';
@@ -32,11 +33,25 @@ export const PATCH = withAdmin(async function (request, { params }, jwtPayload) 
     const body = await request.json();
     await connectDB();
 
+    const oid = new mongoose.Types.ObjectId(id);
+
+    // Handle createdAt separately via raw driver (Mongoose timestamps:true blocks it otherwise)
+    if (body.createdAt) {
+      const date = new Date(body.createdAt);
+      if (!isNaN(date.getTime())) {
+        await User.collection.updateOne({ _id: oid }, { $set: { createdAt: date } });
+      }
+    }
+
     const allowedFields = {};
     if (body.isActive !== undefined) allowedFields.isActive = body.isActive;
     if (body.role && ['user', 'admin'].includes(body.role)) allowedFields.role = body.role;
 
-    const user = await User.findByIdAndUpdate(id, allowedFields, { new: true }).select('-password');
+    if (Object.keys(allowedFields).length > 0) {
+      await User.findByIdAndUpdate(id, { $set: allowedFields });
+    }
+
+    const user = await User.findById(id).select('-password');
     if (!user) return Response.json({ error: 'User not found' }, { status: 404 });
 
     logAudit({

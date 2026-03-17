@@ -5,6 +5,7 @@ import api from '@/lib/api';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n ?? 0);
 const fmtDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const toDatetimeLocal = (d) => d ? new Date(d).toISOString().slice(0, 16) : '';
 
 function Modal({ title, onClose, children }) {
   return (
@@ -88,6 +89,8 @@ export default function AdminUsersPage() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [cdModal, setCdModal] = useState(null); // { account, type }
   const [toast, setToast] = useState('');
+  const [joinDate, setJoinDate] = useState('');
+  const [joinDateSaving, setJoinDateSaving] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -118,10 +121,26 @@ export default function AdminUsersPage() {
     try {
       const data = await api.get(`/admin/users/${user._id}`);
       setUserDetail(data);
+      setJoinDate(toDatetimeLocal(data.user.createdAt));
     } catch (err) {
       console.error(err);
     } finally {
       setDetailLoading(false);
+    }
+  }
+
+  async function saveJoinDate() {
+    if (!joinDate || !selectedUser) return;
+    setJoinDateSaving(true);
+    try {
+      await api.patch(`/admin/users/${selectedUser._id}`, { createdAt: new Date(joinDate).toISOString() });
+      showToast('Join date updated');
+      setUserDetail((d) => ({ ...d, user: { ...d.user, createdAt: new Date(joinDate).toISOString() } }));
+      load();
+    } catch (err) {
+      showToast(err.message || 'Failed to update');
+    } finally {
+      setJoinDateSaving(false);
     }
   }
 
@@ -247,7 +266,6 @@ export default function AdminUsersPage() {
                   ['Email', userDetail.user.email],
                   ['Role', userDetail.user.role],
                   ['Status', userDetail.user.isActive ? 'Active' : 'Inactive'],
-                  ['Joined', fmtDate(userDetail.user.createdAt)],
                   ['Last Login', userDetail.user.lastLogin ? fmtDate(userDetail.user.lastLogin) : 'Never'],
                 ].map(([label, value]) => (
                   <div key={label}>
@@ -255,6 +273,26 @@ export default function AdminUsersPage() {
                     <p className="font-medium text-[#0d1f3c] truncate">{value}</p>
                   </div>
                 ))}
+              </div>
+
+              {/* Editable join date */}
+              <div className="bg-[#f4f4f5] rounded-xl p-3">
+                <p className="text-xs font-semibold text-[#71717a] uppercase tracking-wide mb-2">Member Since (Join Date)</p>
+                <div className="flex gap-2">
+                  <input
+                    type="datetime-local"
+                    value={joinDate}
+                    onChange={(e) => setJoinDate(e.target.value)}
+                    className="flex-1 px-3 py-2 rounded-lg border border-[#d4d4d8] text-sm focus:border-[#1a4688] focus:ring-1 focus:ring-[#1a4688] outline-none bg-white"
+                  />
+                  <button
+                    onClick={saveJoinDate}
+                    disabled={joinDateSaving}
+                    className="px-4 py-2 rounded-lg bg-[#1a4688] text-white text-sm font-medium hover:bg-[#0d1f3c] disabled:opacity-60 transition-colors"
+                  >
+                    {joinDateSaving ? '…' : 'Save'}
+                  </button>
+                </div>
               </div>
 
               {/* Accounts */}

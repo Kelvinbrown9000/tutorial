@@ -5,6 +5,7 @@ import api from '@/lib/api';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n ?? 0);
 const fmtDate = (d) => new Date(d).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const toDatetimeLocal = (d) => d ? new Date(d).toISOString().slice(0, 16) : '';
 
 const TYPE_COLORS = { deposit: 'bg-green-100 text-green-700', withdrawal: 'bg-red-100 text-red-700', transfer_in: 'bg-blue-100 text-blue-700', transfer_out: 'bg-orange-100 text-orange-700', admin_credit: 'bg-purple-100 text-purple-700', admin_debit: 'bg-pink-100 text-pink-700' };
 const TYPE_LABELS = { deposit: 'Deposit', withdrawal: 'Withdrawal', transfer_in: 'Transfer In', transfer_out: 'Transfer Out', admin_credit: 'Admin Credit', admin_debit: 'Admin Debit' };
@@ -17,6 +18,11 @@ export default function AdminTransactionsPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [filters, setFilters] = useState({ type: '', startDate: '', endDate: '', minAmount: '', maxAmount: '', status: '' });
+  const [editTx, setEditTx] = useState(null);
+  const [editDate, setEditDate] = useState('');
+  const [editSaving, setEditSaving] = useState(false);
+  const [editError, setEditError] = useState('');
+  const [toast, setToast] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -41,11 +47,37 @@ export default function AdminTransactionsPage() {
     setPage(1);
   }
 
+  function openEditTx(tx) {
+    setEditTx(tx);
+    setEditDate(toDatetimeLocal(tx.createdAt));
+    setEditError('');
+  }
+
+  async function saveTxDate() {
+    if (!editDate || !editTx) return;
+    setEditSaving(true); setEditError('');
+    try {
+      await api.patch(`/admin/transactions/${editTx._id}`, { createdAt: new Date(editDate).toISOString() });
+      setEditTx(null);
+      setToast('Transaction date updated');
+      setTimeout(() => setToast(''), 3000);
+      load();
+    } catch (err) {
+      setEditError(err.message || 'Failed to update');
+    } finally {
+      setEditSaving(false);
+    }
+  }
+
   const inputCls = 'px-3 py-2.5 rounded-xl border border-[#d4d4d8] text-sm focus:border-[#1a4688] focus:ring-1 focus:ring-[#1a4688] outline-none bg-white';
 
   return (
     <div className="space-y-5">
       <h2 className="text-2xl font-bold text-[#0d1f3c]">All Transactions</h2>
+
+      {toast && (
+        <div className="fixed top-4 right-4 z-50 bg-[#0d1f3c] text-white text-sm px-5 py-3 rounded-xl shadow-lg">{toast}</div>
+      )}
 
       {/* Stats bar */}
       {!loading && (
@@ -104,7 +136,7 @@ export default function AdminTransactionsPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-[#f4f4f5]">
-                    {['Date','ID','User','Account','Type','Amount','Balance After','Status'].map((h) => (
+                    {['Date','ID','User','Account','Type','Amount','Balance After','Status',''].map((h) => (
                       <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-[#71717a] uppercase tracking-wide whitespace-nowrap">{h}</th>
                     ))}
                   </tr>
@@ -133,6 +165,12 @@ export default function AdminTransactionsPage() {
                           {tx.status}
                         </span>
                       </td>
+                      <td className="px-4 py-3">
+                        <button onClick={() => openEditTx(tx)}
+                          className="px-2.5 py-1 rounded-lg bg-[#f0f7ff] text-[#1a4688] text-xs font-medium hover:bg-blue-100 whitespace-nowrap">
+                          Edit Date
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -151,6 +189,41 @@ export default function AdminTransactionsPage() {
           </>
         )}
       </div>
+      {/* Edit transaction date modal */}
+      {editTx && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setEditTx(null)}/>
+          <div className="relative bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="text-lg font-bold text-[#0d1f3c]">Edit Transaction Date</h3>
+              <button onClick={() => setEditTx(null)} className="text-[#71717a] hover:text-[#18181b]">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div className="space-y-4">
+              <p className="text-xs text-[#71717a] font-mono">{editTx.transactionId}</p>
+              <p className="text-sm text-[#52525b]">{editTx.description || editTx.type} · <span className="font-semibold">{fmt(editTx.amount)}</span></p>
+              {editError && <div className="px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">{editError}</div>}
+              <div>
+                <label className="block text-sm font-medium text-[#18181b] mb-1.5">Transaction Date</label>
+                <input
+                  type="datetime-local"
+                  value={editDate}
+                  onChange={(e) => setEditDate(e.target.value)}
+                  className="w-full px-3 py-2.5 rounded-xl border border-[#d4d4d8] text-sm focus:border-[#1a4688] focus:ring-1 focus:ring-[#1a4688] outline-none"
+                />
+              </div>
+              <div className="flex gap-3">
+                <button onClick={() => setEditTx(null)} className="px-5 py-2.5 rounded-xl border border-[#d4d4d8] text-sm font-medium text-[#52525b] hover:bg-[#f4f4f5]">Cancel</button>
+                <button onClick={saveTxDate} disabled={editSaving}
+                  className="flex-1 py-2.5 rounded-xl bg-[#1a4688] text-white text-sm font-semibold hover:bg-[#0d1f3c] disabled:opacity-60 transition-colors">
+                  {editSaving ? 'Saving…' : 'Save Date'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
