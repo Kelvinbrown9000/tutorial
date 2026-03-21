@@ -30,6 +30,13 @@ const contactMethods = [
     action: { label: "Find a Branch", href: "#branches" },
   },
   {
+    icon: "📧",
+    title: "Email Support",
+    detail: brand.supportEmail,
+    sub: "Response within 1 business day",
+    action: { label: "Send Email", href: `mailto:${brand.supportEmail}` },
+  },
+  {
     icon: "✉️",
     title: "Mail",
     detail: brand.address.street,
@@ -52,12 +59,12 @@ export default function ContactPage() {
           <h2 id="contact-methods-heading" className="text-3xl font-bold text-[#0d1f3c] mb-10 text-center">
             How Would You Like to Connect?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
             {contactMethods.map((m) => (
               <div key={m.title} className="bg-white rounded-2xl border border-[#e4e4e7] p-6 flex flex-col" style={{ boxShadow: "0 2px 8px 0 rgb(0 0 0 / 0.06)" }}>
                 <span className="text-3xl mb-3" aria-hidden="true">{m.icon}</span>
                 <h3 className="font-bold text-[#0d1f3c] mb-1">{m.title}</h3>
-                <p className="text-sm font-medium text-[#18181b] mb-0.5">{m.detail}</p>
+                <p className="text-sm font-medium text-[#18181b] mb-0.5 break-all">{m.detail}</p>
                 <p className="text-xs text-[#71717a] mb-4 flex-1">{m.sub}</p>
                 {m.action && (
                   <a
