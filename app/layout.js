@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/lib/authContext';
 import { brand } from '@/content/site';
+import LiveChat from '@/components/LiveChat';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           Skip to main content
         </a>
         <AuthProvider>{children}</AuthProvider>
+        <LiveChat />
       </body>
     </html>
   );

@@ -37,6 +37,7 @@ function AdminShell({ children }) {
     { href: '/admin/users', label: 'Users', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg> },
     { href: '/admin/transactions', label: 'Transactions', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
     { href: '/admin/cards', label: 'Card Requests', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> },
+    { href: '/admin/chat', label: 'Live Chat', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> },
   ];
 
   const isActive = (href) => href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
@@ -105,7 +106,7 @@ function AdminShell({ children }) {
           </button>
           <div className="flex items-center gap-2 flex-1">
             <h1 className="text-[#0d1f3c] font-semibold text-sm">
-              {navItems.find((n) => isActive(n.href))?.label || 'Admin'}
+              {navItems.find((n) => isActive(n.href))?.label ?? 'Admin'}
             </h1>
             <span className="text-xs bg-red-100 text-red-600 font-semibold px-2 py-0.5 rounded-full">Admin</span>
           </div>
