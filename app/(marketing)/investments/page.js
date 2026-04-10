@@ -45,7 +45,7 @@ export default function InvestmentsPage() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-xs text-[#71717a]">Investment products are not federally insured, are not obligations of the credit union, and may lose value. Investments are offered through a third-party registered broker-dealer.</p>
+          <p className="mt-6 text-xs text-[#71717a]">Investment products are not demo insured, are not obligations of the credit union, and may lose value. Investments are offered through a third-party registered broker-dealer.</p>
         </div>
       </section>
     </>

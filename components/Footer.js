@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-10">
           {/* Brand column */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
-            <Link href="/" aria-label="Guardian Trust Federal Credit Union — Home">
+            <Link href="/" aria-label="Guardian Trust Demo Credit Union — Home">
               <Logo className="h-10 w-auto text-white" />
             </Link>
             <p className="text-[#a8c8e8] text-sm leading-relaxed mt-4 max-w-xs">
@@ -53,6 +53,15 @@ export default function Footer() {
 
           {/* Company */}
           <FooterCol title="Company" links={footerLinks.company} />
+        </div>
+      </div>
+
+      {/* Disclaimer bar */}
+      <div className="border-t border-white/08 bg-[#060f1e]">
+        <div className="container-site py-4 text-center">
+          <p className="text-[#71717a] text-xs leading-relaxed max-w-2xl mx-auto">
+            <strong className="text-[#a1a1aa] font-semibold">Disclaimer:</strong> This website is a demonstration project created for educational purposes only. It is not a real financial institution and does not provide banking services.
+          </p>
         </div>
       </div>
 

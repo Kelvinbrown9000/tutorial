@@ -6,7 +6,7 @@ import { membershipEligibility, brand } from "@/content/site";
 export const metadata = {
   title: "Membership & Benefits",
   description:
-    "Learn how to join Guardian Trust Federal Credit Union and discover the exclusive benefits of membership.",
+    "Learn how to join Guardian Trust Demo Credit Union and discover the exclusive benefits of membership.",
 };
 
 const benefits = [

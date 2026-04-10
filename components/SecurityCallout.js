@@ -13,7 +13,7 @@ export default function SecurityCallout() {
           <div className="md:col-span-1 bg-white rounded-2xl p-6 flex flex-col items-center text-center border border-[#e4e4e7]" style={{ boxShadow: "0 2px 8px 0 rgb(0 0 0 / 0.06)" }}>
             <FederalSeal />
             <h3 className="text-base font-bold text-[#0d1f3c] mt-4 mb-2">
-              Federally Insured
+              Demo Insured
             </h3>
             <p className="text-sm text-[#52525b] leading-relaxed">
               {disclaimers.fdic}

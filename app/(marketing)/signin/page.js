@@ -29,13 +29,14 @@ export default function SignInPage() {
     <div className="min-h-screen bg-[#f4f4f5] flex items-center justify-center py-16 px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-block">
-            <div className="inline-flex items-center gap-2 text-[#0d1f3c]">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M18 2L32 8L32 18C32 26 25 31 18 34C11 31 4 26 4 18L4 8Z" fill="#2a9a5c" />
-                <polyline points="11,19 15,23 24,14" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span className="font-bold text-xl tracking-tight">Guardian Trust</span>
+          <Link href="/" className="inline-flex items-center gap-3">
+            <svg width="40" height="40" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M18 2L32 8L32 18C32 26 25 31 18 34C11 31 4 26 4 18L4 8Z" fill="#2a9a5c" />
+              <polyline points="11,19 15,23 24,14" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            <div className="flex flex-col leading-tight">
+              <span className="font-extrabold text-sm tracking-widest uppercase text-[#0d1f3c]">Guardian Trust</span>
+              <span className="text-xs tracking-widest uppercase text-[#52525b] font-medium">Demo Credit Union</span>
             </div>
           </Link>
         </div>

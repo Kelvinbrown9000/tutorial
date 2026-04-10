@@ -4,7 +4,7 @@ import PageHero from "@/components/PageHero";
 export const metadata = {
   title: "Advice & Planning",
   description:
-    "Free financial advice, calculators, budgeting tools, and credit education resources from Guardian Trust Federal Credit Union.",
+    "Free financial advice, calculators, budgeting tools, and credit education resources from Guardian Trust Demo Credit Union.",
 };
 
 export default function AdvicePage() {

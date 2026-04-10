@@ -18,7 +18,7 @@ export default function HeaderNav() {
     >
       <div className="container-site flex items-center justify-between h-16 gap-4">
         {/* Logo */}
-        <Link href="/" aria-label="Guardian Trust Federal Credit Union — Home" className="flex-shrink-0">
+        <Link href="/" aria-label="Guardian Trust Demo Credit Union — Home" className="flex-shrink-0">
           <Logo className="h-10 w-auto text-[#0d1f3c]" />
         </Link>
 

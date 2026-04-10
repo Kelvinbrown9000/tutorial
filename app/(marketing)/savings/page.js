@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Accordion from "@/components/Accordion";
 import Disclaimer from "@/components/Disclaimer";
-import { rates, disclaimers } from "@/content/site";
+import { disclaimers } from "@/content/site";
 
 export const metadata = {
   title: "Savings Accounts",
@@ -18,7 +18,7 @@ const products = [
     rateLabel: "APY",
     minBalance: "$5",
     desc: "Your foundational membership account. Open with just $5 and start building your financial future.",
-    features: ["$5 minimum to open", "No monthly fees", "Up to 6 withdrawals/month", "Federally insured"],
+    features: ["$5 minimum to open", "No monthly fees", "Up to 6 withdrawals/month", "Demo insured"],
   },
   {
     id: "high-yield",

@@ -7,16 +7,16 @@ import LiveChat from '@/components/LiveChat';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
 export const metadata = {
-  metadataBase: new URL('https://www.guardiantrustfederal.org'),
+  metadataBase: new URL('https://www.guardiantrustdemo.org'),
   title: {
     template: `%s | ${brand.name}`,
     default: `${brand.name} — Banking Built on Trust`,
   },
   description:
-    'Guardian Trust Federal Credit Union is a member-owned, not-for-profit financial institution offering checking, savings, loans, credit cards, and digital banking services.',
+    'Guardian Trust Demo Credit Union is a member-owned, not-for-profit financial institution offering checking, savings, loans, credit cards, and digital banking services.',
   keywords: ['credit union', 'guardian trust', 'federal credit union', 'checking accounts', 'savings accounts', 'auto loans', 'mortgage', 'credit cards', 'mobile banking'],
   openGraph: { type: 'website', siteName: brand.name, locale: 'en_US' },
-  robots: { index: true, follow: true },
+  robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
 };
 
 export default function RootLayout({ children }) {

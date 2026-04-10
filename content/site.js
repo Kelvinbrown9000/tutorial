@@ -1,13 +1,13 @@
-// Guardian Trust Federal Credit Union — Central Content Configuration
+// Guardian Trust Demo Credit Union — Central Content Configuration
 // Edit this file to update brand, contact, rates, and copy across the site.
 
 export const brand = {
-  name: "Guardian Trust Federal Credit Union",
+  name: "Guardian Trust Demo Credit Union",
   shortName: "Guardian Trust",
   tagline: "Banking Built on Trust. Powered by Service.",
   supportPhone: "(800) 555-4827",
   supportPhoneRaw: "18005554827",
-  supportEmail: "support@guardiantrustfederal.org",
+  supportEmail: "support@guardiantrustdemo.org",
   routingNumber: "321170839",
   federallyInsured: true,
   insurer: "NCUA",

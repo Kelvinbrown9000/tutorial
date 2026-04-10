@@ -1,6 +1,24 @@
 # Guardian Trust Federal Credit Union — Marketing Website
 
-A production-ready marketing website for **Guardian Trust Federal Credit Union**, built with Next.js 16 (App Router), JavaScript, and Tailwind CSS v4.
+# Guardian Trust Demo Banking Dashboard
+
+This project is a demo banking dashboard UI built for educational and design demonstration purposes.
+
+⚠️ Important Notice  
+This application is NOT a real financial institution and does not process real banking transactions.
+
+## Purpose
+The goal of this project is to demonstrate:
+
+- Banking dashboard UI design
+- Fintech user interface patterns
+- Frontend application structure
+
+## Demo
+https://guardiantrustdemo.org
+
+## Disclaimer
+Do not enter real financial information. All data displayed is mock data.
 
 ---
 

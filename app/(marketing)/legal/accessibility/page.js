@@ -3,7 +3,7 @@ import { brand } from "@/content/site";
 
 export const metadata = {
   title: "Accessibility Statement",
-  description: "Guardian Trust Federal Credit Union is committed to digital accessibility for people with disabilities.",
+  description: "Guardian Trust Demo Credit Union is committed to digital accessibility for people with disabilities.",
 };
 
 export default function AccessibilityPage() {

@@ -3,7 +3,7 @@ import { brand } from "@/content/site";
 
 export const metadata = {
   title: "Terms of Use",
-  description: "Guardian Trust Federal Credit Union Website Terms of Use.",
+  description: "Guardian Trust Demo Credit Union Website Terms of Use.",
 };
 
 export default function TermsPage() {

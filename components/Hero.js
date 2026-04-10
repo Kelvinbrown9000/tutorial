@@ -62,7 +62,7 @@ export default function Hero() {
 
           {/* Trust badges */}
           <div className="flex flex-wrap items-center gap-6 mt-10 justify-center lg:justify-start">
-            <TrustBadge icon={<LockIcon />} text="Federally Insured" />
+            <TrustBadge icon={<LockIcon />} text="Demo Insured" />
             <TrustBadge icon={<StarIcon />} text="4.9★ App Rating" />
             <TrustBadge icon={<UsersIcon />} text="240,000+ Members" />
           </div>

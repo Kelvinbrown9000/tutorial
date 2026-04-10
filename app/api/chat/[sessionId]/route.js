@@ -33,7 +33,7 @@ export async function GET(request, { params }) {
       if (lastMsg?.role === 'customer') {
         const autoReply = {
           role: 'admin',
-          text: "Thank you for reaching out! Our team will be with you shortly. In the meantime, you can call us at (800) 555-4827 or email support@guardiantrustfederal.org.",
+          text: "Thank you for reaching out! Our team will be with you shortly. In the meantime, you can call us at (800) 555-4827 or email support@guardiantrustdemo.org.",
           createdAt: new Date(),
         };
         session.messages.push(autoReply);

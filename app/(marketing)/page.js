@@ -10,7 +10,7 @@ import { brand } from "@/content/site";
 export const metadata = {
   title: `${brand.name} — Banking Built on Trust`,
   description:
-    "Guardian Trust Federal Credit Union is a member-owned, not-for-profit financial institution offering checking, savings, auto loans, mortgages, credit cards, and digital banking — built for you.",
+    "Guardian Trust Demo Credit Union is a member-owned, not-for-profit financial institution offering checking, savings, auto loans, mortgages, credit cards, and digital banking — built for you.",
 };
 
 export default function HomePage() {

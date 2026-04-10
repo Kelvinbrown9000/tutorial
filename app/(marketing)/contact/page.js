@@ -4,7 +4,7 @@ import { brand } from "@/content/site";
 export const metadata = {
   title: "Contact Us",
   description:
-    "Reach Guardian Trust Federal Credit Union by phone, secure message, or visit a branch. We're here 24/7 to help.",
+    "Reach Guardian Trust Demo Credit Union by phone, secure message, or visit a branch. We're here 24/7 to help.",
 };
 
 const contactMethods = [

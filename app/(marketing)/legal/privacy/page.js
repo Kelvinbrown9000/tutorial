@@ -3,7 +3,7 @@ import { brand } from "@/content/site";
 
 export const metadata = {
   title: "Privacy Policy",
-  description: "Read the Guardian Trust Federal Credit Union Privacy Policy to understand how we collect, use, and protect your personal information.",
+  description: "Read the Guardian Trust Demo Credit Union Privacy Policy to understand how we collect, use, and protect your personal information.",
 };
 
 export default function PrivacyPage() {

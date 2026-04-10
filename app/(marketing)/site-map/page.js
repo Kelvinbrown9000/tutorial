@@ -4,7 +4,7 @@ import { footerLinks, navItems } from "@/content/site";
 
 export const metadata = {
   title: "Site Map",
-  description: "Complete site map for Guardian Trust Federal Credit Union — find any page quickly.",
+  description: "Complete site map for Guardian Trust Demo Credit Union — find any page quickly.",
 };
 
 export default function SiteMapPage() {

@@ -5,7 +5,7 @@ export default function Logo({ className = "" }) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 220 48"
-      aria-label="Guardian Trust Federal Credit Union"
+      aria-label="Guardian Trust Demo Credit Union"
       role="img"
       className={className}
       fill="none"
@@ -50,7 +50,7 @@ export default function Logo({ className = "" }) {
         opacity="0.75"
         letterSpacing="0.5"
       >
-        FEDERAL CREDIT UNION
+        DEMO CREDIT UNION
       </text>
     </svg>
   );
