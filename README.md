@@ -1,5 +1,3 @@
-# Guardian Trust Federal Credit Union — Marketing Website
-
 # Guardian Trust Demo Banking Dashboard
 
 This project is a demo banking dashboard UI built for educational and design demonstration purposes.
