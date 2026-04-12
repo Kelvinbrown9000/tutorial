@@ -1,30 +1,32 @@
 import { NextResponse } from 'next/server';
 
-const SITE_USER = process.env.SITE_AUTH_USER || 'demo';
-const SITE_PASS = process.env.SITE_AUTH_PASS || 'guardian2024';
+const ACCESS_TOKEN = process.env.SITE_ACCESS_TOKEN || 'gt-demo-access-2024';
 
 export function middleware(request) {
-  const authHeader = request.headers.get('authorization');
+  const { pathname } = request.nextUrl;
 
-  if (authHeader) {
-    const base64 = authHeader.split(' ')[1];
-    const decoded = atob(base64);
-    const [user, pass] = decoded.split(':');
-
-    if (user === SITE_USER && pass === SITE_PASS) {
-      return NextResponse.next();
-    }
+  // Allow the gate page and its API through without auth
+  if (
+    pathname.startsWith('/gate') ||
+    pathname.startsWith('/api/gate') ||
+    pathname.startsWith('/_next') ||
+    pathname === '/favicon.ico'
+  ) {
+    return NextResponse.next();
   }
 
-  return new NextResponse('Access Denied', {
-    status: 401,
-    headers: {
-      'WWW-Authenticate': 'Basic realm="Guardian Trust Demo Site"',
-    },
-  });
+  // Check for valid access cookie
+  const cookie = request.cookies.get('gt_access');
+  if (cookie?.value === ACCESS_TOKEN) {
+    return NextResponse.next();
+  }
+
+  // No valid cookie — redirect to gate page
+  const gateUrl = new URL('/gate', request.url);
+  gateUrl.searchParams.set('from', pathname);
+  return NextResponse.redirect(gateUrl);
 }
 
 export const config = {
-  // Protect all routes except Next.js internals and static files
   matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
