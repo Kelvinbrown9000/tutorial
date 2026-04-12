@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
     memberNumber: { type: String, unique: true },
     membershipType: { type: String, enum: ['personal', 'business'], default: 'personal' },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    profilePicture: { type: String, default: null },
     isActive: { type: Boolean, default: true },
     lastLogin: { type: Date },
     failedLoginAttempts: { type: Number, default: 0 },

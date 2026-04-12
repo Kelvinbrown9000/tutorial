@@ -35,6 +35,7 @@ function DashboardShell({ children }) {
     { href: '/dashboard/transactions', label: 'Transactions', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> },
     { href: '/dashboard/transfer', label: 'Transfer', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg> },
     { href: '/dashboard/cards', label: 'Cards', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> },
+    { href: '/dashboard/profile', label: 'Profile', icon: <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg> },
   ];
 
   const isActive = (href) => href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
@@ -62,9 +63,17 @@ function DashboardShell({ children }) {
         ))}
       </div>
       <div className="px-3 py-4 border-t border-white/10">
-        <div className="px-3 py-2 mb-2">
-          <p className="text-white text-sm font-medium truncate">{user.firstName} {user.lastName}</p>
-          <p className="text-white/50 text-xs truncate">{user.memberNumber}</p>
+        <div className="flex items-center gap-3 px-3 py-2 mb-2">
+          <div className="w-8 h-8 rounded-full flex-shrink-0 overflow-hidden bg-[#2a9a5c] flex items-center justify-center text-white text-xs font-bold">
+            {user.profilePicture
+              ? <img src={user.profilePicture} alt="" className="w-full h-full object-cover"/>
+              : `${user.firstName[0]}${user.lastName[0]}`.toUpperCase()
+            }
+          </div>
+          <div className="min-w-0">
+            <p className="text-white text-sm font-medium truncate">{user.firstName} {user.lastName}</p>
+            <p className="text-white/50 text-xs truncate">{user.memberNumber}</p>
+          </div>
         </div>
         <button onClick={logout}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:bg-white/10 hover:text-white transition-colors">
@@ -102,9 +111,18 @@ function DashboardShell({ children }) {
           <h1 className="text-[#0d1f3c] font-semibold text-sm flex-1">
             {navItems.find((n) => isActive(n.href))?.label || 'Dashboard'}
           </h1>
-          <span className="text-xs text-[#71717a] hidden sm:block">
-            Welcome, {user.firstName}
-          </span>
+          <Link href="/dashboard/profile" className="flex items-center gap-2.5 group" title="My Profile">
+            <span className="text-xs text-[#71717a] hidden sm:block group-hover:text-[#0d1f3c] transition-colors">
+              Welcome, {user.firstName}
+            </span>
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-[#1a4688] flex items-center justify-center flex-shrink-0 border-2 border-transparent group-hover:border-[#1a4688] transition-all">
+              {user.profilePicture ? (
+                <img src={user.profilePicture} alt="Profile" className="w-full h-full object-cover"/>
+              ) : (
+                <span className="text-white font-bold text-xs">{`${user.firstName[0]}${user.lastName[0]}`.toUpperCase()}</span>
+              )}
+            </div>
+          </Link>
         </header>
 
         {/* Page content */}

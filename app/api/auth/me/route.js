@@ -5,7 +5,9 @@ import User from '@/models/User';
 export const GET = withAuth(async function (request, context, jwtPayload) {
   try {
     await connectDB();
-    const user = await User.findById(jwtPayload.userId).select('-password');
+    // .lean() returns a plain object with all raw MongoDB fields, bypassing
+    // Mongoose strict-mode filtering (important for fields added after first run).
+    const user = await User.findById(jwtPayload.userId).select('-password').lean();
     if (!user || !user.isActive) {
       return Response.json({ error: 'User not found' }, { status: 404 });
     }
@@ -19,6 +21,7 @@ export const GET = withAuth(async function (request, context, jwtPayload) {
         memberNumber: user.memberNumber,
         role: user.role,
         membershipType: user.membershipType,
+        profilePicture: user.profilePicture || null,
         lastLogin: user.lastLogin,
         createdAt: user.createdAt,
       },

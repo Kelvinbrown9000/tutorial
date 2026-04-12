@@ -1,9 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import PageHero from '@/components/PageHero';
 import { useAuth } from '@/lib/authContext';
+
+function resizeImage(file, maxSize = 400) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const scale = Math.min(maxSize / img.width, maxSize / img.height, 1);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.82));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
 
 const steps = [
   { step: '01', title: 'Confirm Eligibility', desc: 'Review the eligibility criteria to make sure you qualify for membership.' },
@@ -23,9 +42,21 @@ export default function JoinPage() {
     password: '', confirmPassword: '', membershipType: 'personal', terms: false,
   });
   const [fieldErrors, setFieldErrors] = useState({});
+  const [avatarPreview, setAvatarPreview] = useState(null);
+  const [avatarData, setAvatarData] = useState(null);
+  const avatarInputRef = useRef(null);
 
   function set(field) {
     return (e) => setForm((f) => ({ ...f, [field]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }));
+  }
+
+  async function handleAvatarChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) return;
+    const data = await resizeImage(file);
+    setAvatarPreview(data);
+    setAvatarData(data);
   }
 
   function validate() {
@@ -55,6 +86,7 @@ export default function JoinPage() {
         phone: form.phone,
         password: form.password,
         membershipType: form.membershipType,
+        ...(avatarData ? { profilePicture: avatarData } : {}),
       });
       setSuccess(user);
     } catch (err) {
@@ -198,6 +230,37 @@ export default function JoinPage() {
                         </label>
                       ))}
                     </div>
+                  </div>
+
+                  {/* Profile picture — optional */}
+                  <div>
+                    <p className="block text-sm font-medium text-[#18181b] mb-2">
+                      Profile Photo <span className="text-[#71717a] font-normal">(optional)</span>
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full bg-[#e4e4e7] flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-[#d4d4d8]">
+                        {avatarPreview ? (
+                          <img src={avatarPreview} alt="Preview" className="w-full h-full object-cover"/>
+                        ) : (
+                          <svg className="w-7 h-7 text-[#a1a1aa]" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                          </svg>
+                        )}
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <button type="button" onClick={() => avatarInputRef.current?.click()}
+                          className="px-4 py-2 rounded-lg border border-[#d4d4d8] text-sm text-[#18181b] hover:bg-[#f4f4f5] transition-colors">
+                          {avatarPreview ? 'Change Photo' : 'Upload Photo'}
+                        </button>
+                        {avatarPreview && (
+                          <button type="button" onClick={() => { setAvatarPreview(null); setAvatarData(null); avatarInputRef.current.value = ''; }}
+                            className="px-4 py-2 rounded-lg text-sm text-red-600 hover:bg-red-50 transition-colors text-left">
+                            Remove
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarChange}/>
                   </div>
 
                   <div>

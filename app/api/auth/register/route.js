@@ -16,7 +16,7 @@ async function handler(request) {
       return Response.json({ error: 'Validation failed', errors }, { status: 400 });
     }
 
-    const { firstName, lastName, email, password, phone, membershipType, adminKey } = data;
+    const { firstName, lastName, email, password, phone, membershipType, adminKey, profilePicture } = data;
 
     const existing = await User.findOne({ email });
     if (existing) {
@@ -34,6 +34,7 @@ async function handler(request) {
       phone,
       membershipType,
       role,
+      ...(profilePicture ? { profilePicture } : {}),
     });
 
     // Auto-create checking + savings accounts
