@@ -56,15 +56,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Disclaimer bar */}
-      <div className="border-t border-white/08 bg-[#060f1e]">
-        <div className="container-site py-4 text-center">
-          <p className="text-[#71717a] text-xs leading-relaxed max-w-2xl mx-auto">
-            <strong className="text-[#a1a1aa] font-semibold">Disclaimer:</strong> This website is a demonstration project created for educational purposes only. It is not a real financial institution and does not provide banking services.
-          </p>
-        </div>
-      </div>
-
       {/* Bottom bar */}
       <div className="border-t border-white/08">
         <div className="container-site py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
